@@ -11,19 +11,18 @@
 #ifndef _UTIL_H
 #define _UTIL_H
 
-#include <stdio.h>  /* size_t */
+#include <string>
+#include <iostream>
+#include "node.hpp"
+using namespace std;
+typedef string Chave;
+typedef int Valor;
+typedef Node<Chave, Valor> * No;
 
 #define MAX(a,b)     ((a) > (b) ? (a): (b))
 
 /*---------------------------------------------------------------*/
-/* String */
-typedef char * String;
-typedef String Chave
 
-/*---------------------------------------------------------------*/
-/* Integer */
-typedef int * Integer;
-typedef Integer Valor;
 
 /*-------------------------------------------------------------*/ 
 /* alguma macros/abreviaturas uteis */
@@ -31,23 +30,6 @@ typedef Integer Valor;
 #define WARNING(msg) fprintf(stdout,"WARNING: %s\n", #msg)
 
 /*---------------------------------------------------------------*/
-/* prototipo de funcoes */
-void *
-emalloc(size_t nbytes);
 
-void *
-ecalloc(size_t nbytes, size_t size);
-
-String 
-getLine(FILE *infile);
-
-String 
-copyString(String s); 
-
-int  
-strCmp(const void *s1, const void *s2);
-
-String 
-getNextToken(String line);
 
 #endif /* _UTIL_H */

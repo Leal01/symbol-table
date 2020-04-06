@@ -1,14 +1,16 @@
-#include "../Node.hpp"
+#include "../util.hpp"
+#include <fstream>
 
 class vetorDes {
    private:
-      Node * table;
+      No table;
       int n;
       int size;
       void printTable();
-
+      void resize();
+      void binarySearch(Chave key)
    public:
-      vetorDes();
+      vetorDes(string file_name);
       ~vetorDes();
       void insere(Chave key, Valor value);
       Valor devolve(Chave key);
