@@ -79,17 +79,17 @@ int main(int argc, char *argv[]) {
     testeOperacoes((vetorDes *) st);
     delete st;
   }
-  // else if (tipo == "VO") {
-  //   start = clock(); 
-  //   vetorOrd *st = new vetorOrd(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "VO") {
+    start = clock(); 
+    vetorOrd *st = new vetorOrd(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((vetorOrd *) st);
-  //   delete st;
-  // }
+    testeOperacoes((vetorOrd *) st);
+    delete st;
+  }
   else if (tipo == "LD") {
     start = clock(); 
     listaDes *st = new listaDes(nome_arquivo);
@@ -101,17 +101,17 @@ int main(int argc, char *argv[]) {
     testeOperacoes((listaDes *) st);
     delete st;
   }
-  // else if (tipo == "LO") {
-  //   start = clock(); 
-  //   listaOrd *st = new listaOrd(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "LO") {
+    start = clock(); 
+    listaOrd *st = new listaOrd(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((listaOrd *) st);
-  //   delete st;
-  // }
+    testeOperacoes((listaOrd *) st);
+    delete st;
+  }
   // else if (tipo == "AB") {
   //   start = clock(); 
   //   arvoreBin *st = new arvoreBin(nome_arquivo);

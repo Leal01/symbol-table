@@ -2,9 +2,9 @@
 #define _TABELADESIMBOLOS_H
 
 #include "vetorDes/vetorDes.hpp"
-// #include "vetorOrd/vetorOrd.hpp"
+#include "vetorOrd/vetorOrd.hpp"
 #include "listaDes/listaDes.hpp"
-// #include "listaOrd/listaOrd.hpp"
+#include "listaOrd/listaOrd.hpp"
 // #include "arvoreBin/arvoreBin.hpp"
 // #include "treap/treap.hpp"
 // #include "arvore23/arvore23.hpp"

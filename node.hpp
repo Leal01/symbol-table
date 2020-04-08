@@ -22,6 +22,7 @@ template <class Key, class Value>
 Node<Key, Value>::Node() {
    key = "";
    value = 0;
+   next = nullptr;
 }
 
 template <class Key, class Value>

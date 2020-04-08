@@ -1,7 +1,7 @@
-#include "vetorDes.hpp"
+#include "vetorOrd.hpp"
 
 
-vetorDes::vetorDes(string file_name) {
+vetorOrd::vetorOrd(string file_name) {
    fstream textFile;
    Chave word;
 
@@ -17,82 +17,87 @@ vetorDes::vetorDes(string file_name) {
    textFile.close();  
 }
 
-vetorDes::~vetorDes() {
+vetorOrd::~vetorOrd() {
    delete [] table;
 }
 
-void vetorDes::insere(Chave key, Valor value) {
-   if (size == n) 
+void vetorOrd::insere(Chave key, Valor value) {
+   int r;
+   r = binarySearch(key);
+
+   if (size == n + 1) 
       resize();
 
-   // for (int i = 0; i < n; i++) {
-   //    Chave x = table[i].getKey();
-
-   //    if (key == x) {
-   //       table[i].setValue(table[i].getValue() + 1);
-   //       return;
-   //    }
-   // }
-   // table[n].setKey(key);
-   // table[n++].setValue(1);
-}
-
-Valor vetorDes::devolve(Chave key) {
-   // for (int i = 0; i < n; i++)
-   //    if (table[i].getKey() == key)
-   //       return table[i].getValue();
-
-   return 0;
-}
-
-void vetorDes::remove(Chave key) {
-   int i = 0;
-   // for (; table[i].getKey() != key && i < n; i++) 
-      
-   // if (table[i].getKey() == key) {
-   //    // Remove e traz todo mundo pra tras
-   //    table[i].setKey("");
-   //    table[i].setValue(0);
-   //    for (; i + 1 < n; i++) {
-   //       table[i].setKey(table[i+1].getKey());
-   //       table[i].setValue(table[i+1].getValue());
-   //    }
-   //    table[i+1].setKey("");
-   //    table[i+1].setValue(0);
-   // }
-
+   if (table[r].getKey() == key)
+      table[r].setValue(table[r].getValue() + 1);
+   
    else {
-      cout << "Chave não encontrada\n";
+      for (int i = n; i > r; i--) {
+         table[i].setKey(table[i - 1].getKey());
+         table[i].setValue(table[i - 1].getValue());
+      }
+
+      table[r].setKey(key);
+      table[r].setValue(1);
+      n++;
    }
 }
 
-int vetorDes::rank(Chave key) {
-   int i, m;
-   i = m = 0;
+int vetorOrd::binarySearch(Chave key) {
+   int ini, mid, end;
+   ini = 0;
+   end = n - 1;
+  
 
-   // for (; table[i].getKey() != key && i < n; i++) 
-   //    m++;
+   while (ini <= end) {
+      mid = (ini + end)/2;
 
-   // if (table[i].getKey() == key)
-   //    return m;
-   else
-      cout << "Chave não encontrada\n";
+      if (table[mid].getKey() == key)
+         return mid;
+      else if (table[mid].getKey() > key) 
+         end = mid - 1;
+      else
+         ini = mid + 1;
+   }
 
-   return -1;
+   return ini;
 }
 
-Chave vetorDes::seleciona(int k) {
-   if (k < n)
-      return table[k].getKey();
+Valor vetorOrd::devolve(Chave key) {
+   int r = binarySearch(key);
+   return table[r].getValue();
+}
+
+void vetorOrd::remove(Chave key) {
+   int i;
+   int r = binarySearch(key);
+
+
+   for (i = r; i + 1 < n; i++) {
+      table[i].setKey(table[i + 1].getKey());
+      table[i].setValue(table[i + 1].getValue());
+   }
+
+   table[i + 1].setKey("");
+   table[i + 1].setValue(0);
 
 }
 
-void vetorDes::printTable() {
+int vetorOrd::rank(Chave key) {
+   int r = binarySearch(key);
+   return r;
+}
+
+Chave vetorOrd::seleciona(int k) {
+   return table[k].getKey();
+}
+
+void vetorOrd::printTable() {
    for (int i = 0; i < n; i++)
-      cout << table[i].getKey() << "     "<< table[i].getValue() << "\n"; 
+      cout << table[i].getKey() << "     " << table[i].getValue() << "\n"; 
 }
 
-void vetorDes::resize() {
+void vetorOrd::resize() {
    No newTable;
    newTable = new Node<Chave, Valor>[size + 10];
    size = size + 10;

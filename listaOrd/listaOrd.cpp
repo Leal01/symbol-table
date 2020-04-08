@@ -1,6 +1,6 @@
-#include "listaDes.hpp"
+#include "listaOrd.hpp"
 
-listaDes::listaDes(string file_name) {
+listaOrd::listaOrd(string file_name) {
    fstream textFile;
    Chave word;
   
@@ -15,7 +15,8 @@ listaDes::listaDes(string file_name) {
    textFile.close();  
 
 }
-listaDes::~listaDes() {
+
+listaOrd::~listaOrd() {
    No aux = first;
    No aux2;
    
@@ -26,32 +27,54 @@ listaDes::~listaDes() {
    }
 }
 
-void listaDes::insere(Chave key, Valor value) {  
+void listaOrd::insere(Chave key, Valor value) {
    No aux = first;
    No aux2;
 
+   if (first == nullptr) {
+      first = new Node<Chave, Valor>;
+      first->setKey(key);
+      first->setValue(1);
+      return;
+   }
 
-   while (aux != nullptr) {
-      if (aux->getKey() == key) {
-         aux->setValue(aux->getValue() + 1);
-         return;
-      }
+   // Percorro a lista enquanto a chave é maior que as que já estão nela
+   while (aux != nullptr && aux->getKey() < key) {
       aux2 = aux;
       aux = aux->getNext();
    }
 
-   aux = new Node<Chave, Valor>;
-   aux->setKey(key);
-   aux->setValue(1);
+   // Quando saio do loop tenho duas possibilidades, achei a chave, ou achei o lugar em que ela deve ser inserida
+   if (aux != nullptr && aux->getKey() == key) {
+      aux->setValue(aux->getValue() + 1);
 
-   if (first == nullptr)
-      first = aux;
-   else
-      aux2->setNext(aux);
+      return;
+   }
+   
+   // Ela deve ser então, inserida:
+   // 3 casos: no fim => aux == nullptr
+   //          no inicio => newNode->setNext(first) e first = newNode (aux == first)
+   //          no meio => aux2->setNext(newNode) e newNode->setNext(aux)
+   else {
+      No nNode = new Node<Chave, Valor>;
+      nNode->setKey(key);
+      nNode->setValue(1);
+      if (aux == nullptr) 
+         aux2->setNext(nNode);
+      
+      else if (aux == first) {
+         nNode->setNext(first);
+         first = nNode;
+      }
+      else {
+         aux2->setNext(nNode);
+         nNode->setNext(aux);
+      }
+   }
 
 }
 
-Valor listaDes::devolve(Chave key) {
+Valor listaOrd::devolve(Chave key) {
    No aux = first;
 
    while (aux != nullptr) {
@@ -63,7 +86,8 @@ Valor listaDes::devolve(Chave key) {
    if (aux == nullptr)
       cout << "Chave não encontrada!\n";
 } 
-void listaDes::remove(Chave key) {
+
+void listaOrd::remove(Chave key) {
    No aux = first;
    No aux2;
 
@@ -86,7 +110,7 @@ void listaDes::remove(Chave key) {
    }
 }
 
-int listaDes::rank(Chave key) {
+int listaOrd::rank(Chave key) {
    No aux = first;
    int m = 1;
 
@@ -101,14 +125,14 @@ int listaDes::rank(Chave key) {
    cout << "Chave não encontrada!\n";
 }
 
-Chave listaDes::seleciona(int k) { // Não está funcionando, assim como outras coisas
+Chave listaOrd::seleciona(int k) { // Não está funcionando, assim como outras coisas
    No aux = first;
    for (int i = 0; i < k; i++, aux = aux->getNext());
    
    return aux->getKey();
 }
 
-void listaDes::printTable() {
+void listaOrd::printTable() {
    No aux = first;
 
    while (aux != nullptr) {

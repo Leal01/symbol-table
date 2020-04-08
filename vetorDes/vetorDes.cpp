@@ -68,7 +68,8 @@ void vetorDes::remove(Chave key) {
 
 int vetorDes::rank(Chave key) {
    int i, m;
-   i = m = 0;
+   i = 0;
+   m = 1;
 
    for (; table[i].getKey() != key && i < n; i++) 
       m++;

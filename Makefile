@@ -12,8 +12,8 @@ RN		 = arvoreRN
 HS		 = hashTable
 RM		 = rm
 #-----------------------
-ep1: main.o $(VD).o $(LD).o
-	$(CC) -o ep1 main.o $(VD).o $(LD).o -lm
+ep1: main.o $(VD).o $(VO).o $(LD).o  $(LO).o 
+	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o -lm
 
 main.o: main.cpp  util.hpp
 	$(CC) $(CFLAGS) -c main.cpp
@@ -27,8 +27,8 @@ vetorOrd.o: $(VO)/$(VO).cpp $(VO)/$(VO).hpp node.hpp
 listaDes.o: $(LD)/$(LD).cpp $(LD)/$(LD).hpp node.hpp
 	$(CC) $(CFLAGS) -c $(LD)/$(LD).cpp
 
-# listaOrd.o: $(LO)/$(LO).cpp $(LO)/$(LO).hpp util.hpp node.hpp
-# 	$(CC) $(CFLAGS) -c $(LO)/$(LO).cpp
+listaOrd.o: $(LO)/$(LO).cpp $(LO)/$(LO).hpp node.hpp
+	$(CC) $(CFLAGS) -c $(LO)/$(LO).cpp
 
 # arvoreBin.o: $(AB)/$(AB).cpp $(AB)/$(AB).hpp util.hpp node.hpp
 # 	$(CC) $(CFLAGS) -c $(AB)/$(AB).cpp

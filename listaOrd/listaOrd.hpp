@@ -1,21 +1,17 @@
 #include "../util.hpp"
 #include <fstream>
 
-class vetorOrd {
+class listaOrd {
    private:
-      No table;
-      int n;
-      int size;
+      No first;
       void printTable();
-      void resize();
-      int binarySearch(Chave key);
-      
+   
    public:
-      vetorOrd(string file_name);
-      ~vetorOrd();
+      listaOrd(string file_name);
+      ~listaOrd();
       void insere(Chave key, Valor value);
       Valor devolve(Chave key);
       void remove(Chave key);
       int rank(Chave key);
-      Chave seleciona(int k); // ?
-}; 
+      Chave seleciona(int k);
+};
