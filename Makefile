@@ -12,8 +12,8 @@ RN		 = arvoreRN
 HS		 = hashTable
 RM		 = rm
 #-----------------------
-ep1: main.o $(VD).o $(VO).o $(LD).o  $(LO).o 
-	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o -lm
+ep1: main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o
+	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o -lm
 
 main.o: main.cpp  util.hpp
 	$(CC) $(CFLAGS) -c main.cpp
@@ -30,8 +30,8 @@ listaDes.o: $(LD)/$(LD).cpp $(LD)/$(LD).hpp node.hpp
 listaOrd.o: $(LO)/$(LO).cpp $(LO)/$(LO).hpp node.hpp
 	$(CC) $(CFLAGS) -c $(LO)/$(LO).cpp
 
-# arvoreBin.o: $(AB)/$(AB).cpp $(AB)/$(AB).hpp util.hpp node.hpp
-# 	$(CC) $(CFLAGS) -c $(AB)/$(AB).cpp
+arvoreBin.o: $(AB)/$(AB).cpp $(AB)/$(AB).hpp treeNode.hpp
+	$(CC) $(CFLAGS) -c $(AB)/$(AB).cpp
 
 # treap.o: $(TR)/$(TR).cpp $(TR)/$(TR).hpp util.hpp node.hpp
 # 	$(CC) $(CFLAGS) -c $(TR)/$(TR).cpp

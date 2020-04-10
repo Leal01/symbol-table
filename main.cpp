@@ -112,17 +112,17 @@ int main(int argc, char *argv[]) {
     testeOperacoes((listaOrd *) st);
     delete st;
   }
-  // else if (tipo == "AB") {
-  //   start = clock(); 
-  //   arvoreBin *st = new arvoreBin(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "AB") {
+    start = clock(); 
+    arvoreBin *st = new arvoreBin(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((arvoreBin *) st);
-  //   delete st;
-  // }
+    testeOperacoes((arvoreBin *) st);
+    delete st;
+  }
   // else if (tipo == "TR") {
   //   start = clock(); 
   //   treap *st = new treap(nome_arquivo);

@@ -1,9 +1,8 @@
 #include "../util.hpp"
-#include <fstream>
 
 class vetorOrd {
    private:
-      No table;
+      Node<Chave, Valor> ** table;
       int n;
       int size;
       void printTable();
@@ -17,5 +16,5 @@ class vetorOrd {
       Valor devolve(Chave key);
       void remove(Chave key);
       int rank(Chave key);
-      Chave seleciona(int k); // ?
+      Chave seleciona(int k);
 }; 

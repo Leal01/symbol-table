@@ -5,7 +5,7 @@ vetorOrd::vetorOrd(string file_name) {
    fstream textFile;
    Chave word;
 
-   table = new Node<Chave, Valor>[10];
+   table = new Node<Chave, Valor>*[10];
    size = 10;
    n = 0;
    textFile.open(file_name);
@@ -18,6 +18,9 @@ vetorOrd::vetorOrd(string file_name) {
 }
 
 vetorOrd::~vetorOrd() {
+   for (int i = 0; i < n; i++)
+      delete table[i];
+
    delete [] table;
 }
 
@@ -28,33 +31,32 @@ void vetorOrd::insere(Chave key, Valor value) {
    if (size == n + 1) 
       resize();
 
-   if (table[r].getKey() == key)
-      table[r].setValue(table[r].getValue() + 1);
-   
-   else {
-      for (int i = n; i > r; i--) {
-         table[i].setKey(table[i - 1].getKey());
-         table[i].setValue(table[i - 1].getValue());
-      }
+   if (table[r] != nullptr && table[r]->getKey() == key) 
+      table[r]->setValue(table[r]->getValue() + 1);
 
-      table[r].setKey(key);
-      table[r].setValue(1);
+   else {
+      for (int i = n; i > r; i--) 
+         table[i] = table[i - 1];
+      
+      table[r] = new Node<Chave, Valor>;
+      table[r]->setKey(key);
+      table[r]->setValue(1);
       n++;
    }
 }
 
 int vetorOrd::binarySearch(Chave key) {
    int ini, mid, end;
-   ini = 0;
+   ini = mid = 0;
    end = n - 1;
   
 
    while (ini <= end) {
       mid = (ini + end)/2;
 
-      if (table[mid].getKey() == key)
+      if (table[mid]->getKey() == key)
          return mid;
-      else if (table[mid].getKey() > key) 
+      else if (table[mid]->getKey() > key) 
          end = mid - 1;
       else
          ini = mid + 1;
@@ -65,7 +67,7 @@ int vetorOrd::binarySearch(Chave key) {
 
 Valor vetorOrd::devolve(Chave key) {
    int r = binarySearch(key);
-   return table[r].getValue();
+   return table[r]->getValue();
 }
 
 void vetorOrd::remove(Chave key) {
@@ -74,12 +76,12 @@ void vetorOrd::remove(Chave key) {
 
 
    for (i = r; i + 1 < n; i++) {
-      table[i].setKey(table[i + 1].getKey());
-      table[i].setValue(table[i + 1].getValue());
+      table[i]->setKey(table[i + 1]->getKey());
+      table[i]->setValue(table[i + 1]->getValue());
    }
 
-   table[i + 1].setKey("");
-   table[i + 1].setValue(0);
+   table[i + 1]->setKey("");
+   table[i + 1]->setValue(0);
 
 }
 
@@ -89,22 +91,22 @@ int vetorOrd::rank(Chave key) {
 }
 
 Chave vetorOrd::seleciona(int k) {
-   return table[k].getKey();
+   if (k < n)
+      return table[k]->getKey();
 }
 
 void vetorOrd::printTable() {
    for (int i = 0; i < n; i++)
-      cout << table[i].getKey() << "     " << table[i].getValue() << "\n"; 
+      cout << table[i]->getKey() << "     " << table[i]->getValue() << "\n"; 
 }
 
 void vetorOrd::resize() {
-   No newTable;
-   newTable = new Node<Chave, Valor>[size + 10];
+   Node<Chave, Valor> ** newTable = new Node<Chave, Valor>*[size + 10];
    size = size + 10;
 
    for (int i = 0; i < n; i++) {
-      newTable[i].setKey(table[i].getKey());
-      newTable[i].setValue(table[i].getValue());
+      newTable[i] = table[i];
+      table[i] = nullptr;
    }
 
    delete [] table;

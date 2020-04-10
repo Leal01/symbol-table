@@ -1,9 +1,9 @@
 #include "../util.hpp"
-#include <fstream>
+
 
 class vetorDes {
    private:
-      No table;
+      Node<Chave, Valor> ** table;
       int n;
       int size;
       void printTable();
