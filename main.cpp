@@ -145,17 +145,17 @@ int main(int argc, char *argv[]) {
   //   testeOperacoes((arvore23 *) st);
   //   delete st;
   // }
-  // else if (tipo == "RN") {
-  //   start = clock(); 
-  //   arvoreRN *st = new arvoreRN(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "RN") {
+    start = clock(); 
+    arvoreRN *st = new arvoreRN(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((arvoreRN *) st);
-  //   delete st;
-  // }
+    testeOperacoes((arvoreRN *) st);
+    delete st;
+  }
   // else if (tipo == "HS") {
   //   start = clock(); 
   //   hashTable *st = new hashTable(nome_arquivo);
