@@ -134,17 +134,17 @@ int main(int argc, char *argv[]) {
   //   testeOperacoes((treap *) st);
   //   delete st;
   // }
-  // else if (tipo == "A23") {
-  //   start = clock(); 
-  //   arvore23 *st = new arvore23(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "A23") {
+    start = clock(); 
+    arvore23 *st = new arvore23(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((arvore23 *) st);
-  //   delete st;
-  // }
+    testeOperacoes((arvore23 *) st);
+    delete st;
+  }
   else if (tipo == "RN") {
     start = clock(); 
     arvoreRN *st = new arvoreRN(nome_arquivo);

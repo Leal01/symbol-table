@@ -80,15 +80,10 @@ class arvoreBin {
       Valor get(TreeNode<Chave, Valor> * root, Chave key);
       int getRank(TreeNode<Chave, Valor> * root, Chave key);
       void printTable(TreeNode<Chave, Valor> * root);
-      int size(TreeNode<Chave, Valor> * root);
-      Chave select(TreeNode<Chave, Valor> * root, int k);
-      void deleteTree(TreeNode<Chave, Valor> * root);
-      TreeNode<Chave, Valor> * destroyNode(TreeNode<Chave, Valor> * root, Chave key);
-      TreeNode<Chave, Valor> * max(TreeNode<Chave, Valor> * root);
 
    public:
       arvoreBin(string file_name);
-      ~arvoreBin();     
+      ~arvoreBin();
       void insere(Chave key, Valor value);
       Valor devolve(Chave key);
       void remove(Chave key);

@@ -1,5 +1,4 @@
 #include "../util.hpp"
-#define COUNT 10 
 
 template <class Key, class Value>
 class TreeNodeRN {

@@ -7,7 +7,7 @@
 #include "listaOrd/listaOrd.hpp"
 #include "arvoreBin/arvoreBin.hpp"
 #include "arvoreRN/arvoreRN.hpp"
-// #include "arvore23/arvore23.hpp"
+#include "arvore23/arvore23.hpp"
 // #include "treap/treap.hpp"
 // #include "hashTable/hashTable.hpp"
 
