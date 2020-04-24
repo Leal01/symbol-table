@@ -207,14 +207,36 @@ arvore23::arvore23(string file_name) {
 }
 
 arvore23::~arvore23() {
-   
+   deleteTree(root);   
+}
 
+void arvore23::deleteTree(TreeNode23<Chave, Valor> * root) {
+   if (root == nullptr)
+      return;
+   
+   deleteTree(root->getLeft());
+   deleteTree(root->getRight());
+   delete root;
 }
 
 
-
 Valor arvore23::devolve(Chave key) {
+   return get(root, key);
+}
 
+Valor arvore23::get(TreeNode23<Chave, Valor> * root, Chave key) {
+   if (root == nullptr)
+       return 0;
+   else if (root->getKey(1) == key)
+      return root->getValue(1);
+   else if (!root->getTwoNode() && root->getKey(2) == key)
+      return root->getValue(2);
+   else if  (root->getKey(1) > key)
+      return get(root->getLeft(), key);
+   else if (!root->getTwoNode() && root->getKey(2) < key)
+      return get(root->getRight(), key);
+   
+   return get(root->getMid(), key);
 }
 
 void arvore23::remove(Chave key) {
@@ -223,12 +245,75 @@ void arvore23::remove(Chave key) {
 }
 
 int arvore23::rank(Chave key) {
-
+   return getRank(root, key);
 
 }
 
-Chave arvore23::seleciona(int k) {
+int arvore23::getRank(TreeNode23<Chave, Valor> * root, Chave key) {
+   int r = 0;
+   
+   if (root->getKey(1) == key)
+      return size(root->getLeft());
+   else if (!root->getTwoNode() && root->getKey(2) == key) {
+      r += size(root->getLeft());
+      return (r + size(root->getMid()));
+   }
 
+   else if (!root->getTwoNode() && key > root->getKey(2)) {
+      r += size(root->getLeft()) + 1;
+      r += size(root->getMid());
+      r += getRank(root->getRight(), key);
+   }
+
+   else if (key < root->getKey(1)) {
+      r += getRank(root->getLeft(), key);
+   }
+
+   else {
+      r += size(root->getLeft()) + 1;
+      r += getRank(root->getMid(), key);
+   }
+
+   return r;
+}
+
+int arvore23::size(TreeNode23<Chave, Valor> * root) {
+   int s = 0;
+
+   if (root == nullptr)
+      return s;
+   
+   s += size(root->getLeft()) + 1;
+   s += size(root->getMid());
+   if (!root->getTwoNode())
+      s += size(root->getRight()) + 1;
+      
+
+   return s;
+}
+
+Chave arvore23::seleciona(int k) {
+   return select(root, k);
+}
+
+Chave arvore23::select(TreeNode23<Chave, Valor> * root, int k) {
+   if (root == nullptr) 
+      return 0;
+
+   int r = rank(root->getKey(1));
+
+   if (k == r)
+      return root->getKey(1);
+   else if (k == (r + 1) && !root->getTwoNode())
+      return root->getKey(2);
+   else if (k < size(root->getLeft()))
+      return select(root->getLeft(), k);
+   else if (k > size(root->getLeft()) && k > size(root->getLeft()) + size(root->getMid()))
+      return select(root->getRight(), k);
+   else
+      return select(root->getMid(), k);
+   
+   
 }
 
 void arvore23::printTable(TreeNode23<Chave, Valor> * root) {

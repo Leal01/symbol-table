@@ -156,21 +156,21 @@ int main(int argc, char *argv[]) {
     testeOperacoes((arvoreRN *) st);
     delete st;
   }
-  // else if (tipo == "HS") {
-  //   start = clock(); 
-  //   hashTable *st = new hashTable(nome_arquivo);
-  //   end = clock();
+  else if (tipo == "HS") {
+    start = clock(); 
+    hashTable *st = new hashTable(nome_arquivo);
+    end = clock();
 
-  //   elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
-  //   cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
+    elapsed = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cout << "arquivo lido e ST construida em " << elapsed << " segundos\n";
 
-  //   testeOperacoes((hashTable *) st);
-  //   delete st;
-  // }
-  // else {
-  //   cout << "A estrutura" << tipo << "não é válida";
-  //   exit(EXIT_FAILURE);
-  // }
+    testeOperacoes((hashTable *) st);
+    delete st;
+  }
+  else {
+    cout << "A estrutura" << tipo << "não é válida";
+    exit(EXIT_FAILURE);
+  }
 
   // return EXIT_SUCCESS;
 }

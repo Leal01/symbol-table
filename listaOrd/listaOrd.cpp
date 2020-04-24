@@ -108,24 +108,27 @@ void listaOrd::remove(Chave key) {
       aux2 = aux;
       aux = aux->getNext();
    }
+
+   printTable();
 }
 
 int listaOrd::rank(Chave key) {
    No aux = first;
-   int m = 1;
+   int r = 0;
 
    while (aux != nullptr) {
       if (aux->getKey() == key)
-         return m;
+         return r;
 
-      m++;
+      r++;
       aux = aux->getNext();
    }
 
    cout << "Chave não encontrada!\n";
+   return -1;
 }
 
-Chave listaOrd::seleciona(int k) { // Não está funcionando, assim como outras coisas
+Chave listaOrd::seleciona(int k) {
    No aux = first;
    for (int i = 0; i < k; i++, aux = aux->getNext());
    

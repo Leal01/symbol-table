@@ -155,19 +155,93 @@ arvoreRN::arvoreRN(string file_name) {
    textFile.close();
 }
 
-arvoreRN::~arvoreRN() {}
+arvoreRN::~arvoreRN() {
+   deleteTree(root);
+}
+
+void arvoreRN::deleteTree(TreeNodeRN<Chave, Valor> * root) {
+   if (root == nullptr)
+      return;
+   
+   deleteTree(root->getLeft());
+   deleteTree(root->getRight());
+   delete root;
+}
 
 void arvoreRN::insere(Chave key, Valor value) {
    root = put(root, key, value);
 }
 
-Valor arvoreRN::devolve(Chave key) {}
+Valor arvoreRN::devolve(Chave key) {
+   return get(root, key);
+}
 
-void arvoreRN::remove(Chave key) {}
+Valor arvoreRN::get(TreeNodeRN<Chave, Valor> * root, Chave key) {
+   if (root == nullptr)
+       return 0;
+   else if (root->getKey() == key)
+      return root->getValue();
+   else if  (root->getKey() > key)
+      return get(root->getLeft(), key);
+   
+   return get(root->getRight(), key);
+}
 
-int arvoreRN::rank(Chave key) {}
+void arvoreRN::remove(Chave key) {
 
-Chave arvoreRN::seleciona(int k) {}
+}
+
+int arvoreRN::rank(Chave key) {
+   return getRank(root, key);
+}
+
+int arvoreRN::getRank(TreeNodeRN<Chave, Valor> * root, Chave key) {
+   int r = 0;
+   
+   if (root->getKey() == key)
+      return size(root->getLeft());
+
+   else if (key > root->getKey()) {
+      r += size(root->getLeft()) + 1;
+      r += getRank(root->getRight(), key);
+   }
+
+   else {
+      r += getRank(root->getLeft(), key);
+   }
+
+   return r;
+}
+
+int arvoreRN::size(TreeNodeRN<Chave, Valor> * root) {
+   int s = 0;
+
+   if (root == nullptr)
+      return s;
+   
+   s += size(root->getLeft()) + 1;
+   s += size(root->getRight());
+
+   return s;
+}
+
+Chave arvoreRN::seleciona(int k) {
+   return select(root, k);
+}
+
+Chave arvoreRN::select(TreeNodeRN<Chave, Valor> * root, int k) {
+   if (root == nullptr) 
+      return 0;
+
+   int r = rank(root->getKey());
+
+   if (k == r)
+      return root->getKey();
+   else if (k > r)
+      return select(root->getRight(), k);
+   else
+      return select(root->getLeft(), k);
+}
 
 void arvoreRN::printTable(TreeNodeRN<Chave, Valor> * root) {
    if (root == nullptr)
@@ -176,6 +250,7 @@ void arvoreRN::printTable(TreeNodeRN<Chave, Valor> * root) {
    printTable(root->getLeft());
    cout << root->getKey() << "   " << root->getValue() << endl;
    printTable(root->getRight());
+
 }
 
   

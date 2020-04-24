@@ -6,7 +6,7 @@ class Node {
    private: 
       Key key;
       Value value;
-      Node<Key, Value> * next; 
+      Node<Key, Value> * next;
    public: 
       Node();
       ~Node();
@@ -16,10 +16,12 @@ class Node {
       void setKey(Key newKey);
       void setValue(Value i);
       void setNext(Node * newNode);
+      int numNodeOnLine;
 };
 
 template <class Key, class Value>
 Node<Key, Value>::Node() {
+   numNodeOnLine = 0;
    key = "";
    value = 0;
    next = nullptr;

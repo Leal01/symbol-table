@@ -120,6 +120,11 @@ class arvore23 {
    private:
       TreeNode23<Chave, Valor> * root;
       TreeNode23<Chave, Valor> * put(TreeNode23<Chave, Valor> * root, Chave key, Valor value, bool &grew);
+      Valor get(TreeNode23<Chave, Valor> * root, Chave key);
+      Chave select(TreeNode23<Chave, Valor> * root, int k);
+      int size(TreeNode23<Chave, Valor> * root);
+      int getRank(TreeNode23<Chave, Valor> * root, Chave key);
+      void deleteTree(TreeNode23<Chave, Valor> * root);
       void printTable(TreeNode23<Chave, Valor> * root);
 
    public:

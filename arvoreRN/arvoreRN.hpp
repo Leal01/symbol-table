@@ -104,6 +104,11 @@ class arvoreRN {
    private:
       TreeNodeRN<Chave, Valor> * root;
       TreeNodeRN<Chave, Valor> * put(TreeNodeRN<Chave, Valor> * root, Chave key, Valor value);
+      Valor get(TreeNodeRN<Chave, Valor> * root, Chave key);
+      void deleteTree(TreeNodeRN<Chave, Valor> * root);
+      int getRank(TreeNodeRN<Chave, Valor> * root, Chave key);
+      int size(TreeNodeRN<Chave, Valor> * root);
+      Chave select(TreeNodeRN<Chave, Valor> * root, int k);
       void printTable(TreeNodeRN<Chave, Valor> * root);
 
    public:

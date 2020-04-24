@@ -32,12 +32,13 @@ TreeNode<Chave, Valor> * arvoreBin::put(TreeNode<Chave, Valor> * root, Chave key
 }
 
 int arvoreBin::getRank(TreeNode<Chave, Valor> * root, Chave key) {
-   int r = 1;
+   int r = 0;
+   
    if (root->getKey() == key)
-      return r;
+      return size(root->getLeft());
 
    else if (key > root->getKey()) {
-      r += size(root->getLeft());
+      r += size(root->getLeft()) + 1;
       r += getRank(root->getRight(), key);
    }
 

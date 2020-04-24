@@ -12,8 +12,8 @@ RN		 = arvoreRN
 HS		 = hashTable
 RM		 = rm
 #-----------------------
-ep1: main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o
-	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o -lm
+ep1: main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o $(HS).o
+	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o  $(HS).o -lm
 
 main.o: main.cpp  util.hpp
 	$(CC) $(CFLAGS) -c main.cpp
@@ -42,8 +42,8 @@ arvore23.o: $(A23)/$(A23).cpp $(A23)/$(A23).hpp
 arvoreRN.o: $(RN)/$(RN).cpp $(RN)/$(RN).hpp
 	$(CC) $(CFLAGS) -c $(RN)/$(RN).cpp
 
-# hashTable.o: $(HS)/$(HS).cpp $(HS)/$(HS).hpp util.hpp node.hpp
-# 	$(CC) $(CFLAGS) -c $(HS)/$(HS).cpp
+hashTable.o: $(HS)/$(HS).cpp $(HS)/$(HS).hpp util.hpp node.hpp
+	$(CC) $(CFLAGS) -c $(HS)/$(HS).cpp
 
 clear:
 	$(RM) -r *.o && $(RM) -r ep1

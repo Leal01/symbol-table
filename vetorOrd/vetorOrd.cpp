@@ -67,22 +67,27 @@ int vetorOrd::binarySearch(Chave key) {
 
 Valor vetorOrd::devolve(Chave key) {
    int r = binarySearch(key);
-   return table[r]->getValue();
+
+   if ( r >= 0 && table[r]->getKey() == key)
+      return table[r]->getValue();
+      
+   else
+      return 0;
+
 }
 
 void vetorOrd::remove(Chave key) {
    int i;
    int r = binarySearch(key);
 
-
    for (i = r; i + 1 < n; i++) {
+
       table[i]->setKey(table[i + 1]->getKey());
       table[i]->setValue(table[i + 1]->getValue());
    }
 
-   table[i + 1]->setKey("");
-   table[i + 1]->setValue(0);
-
+   n--;
+   printTable();
 }
 
 int vetorOrd::rank(Chave key) {
@@ -93,6 +98,8 @@ int vetorOrd::rank(Chave key) {
 Chave vetorOrd::seleciona(int k) {
    if (k < n)
       return table[k]->getKey();
+   else 
+      cout << "Rank indisponível\n";
 }
 
 void vetorOrd::printTable() {
