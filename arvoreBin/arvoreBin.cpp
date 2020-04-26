@@ -171,7 +171,7 @@ void arvoreBin::printTable(TreeNode<Chave, Valor> * root) {
       return;
       
    printTable(root->getLeft());
-   cout << root->getKey() << "   " << root->getValue() << endl;
+   cout << root->getKey() << endl;
    printTable(root->getRight());
 
 }

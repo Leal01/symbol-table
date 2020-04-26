@@ -7,6 +7,9 @@
 # Ignore .o files
 *.o
 
+# Ignore .py files
+*.py
+
 # Ignore valgrind output
 valgrind-out.txt
 

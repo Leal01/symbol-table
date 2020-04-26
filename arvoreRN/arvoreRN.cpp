@@ -188,8 +188,292 @@ Valor arvoreRN::get(TreeNodeRN<Chave, Valor> * root, Chave key) {
 }
 
 void arvoreRN::remove(Chave key) {
-
+   root = destroy(root, key);
+   printTable(root);
 }
+
+TreeNodeRN<Chave, Valor> * arvoreRN::destroy(TreeNodeRN<Chave, Valor> * root, Chave key) {
+   if (root == nullptr)
+      return root;
+
+   else {
+      TreeNodeRN<Chave, Valor> * p = root;
+      bool found = false;
+
+      while (!found) {
+         if (key < p->getKey())
+            p = p->getLeft();
+
+         else if (key > p->getKey())
+            p = p->getRight();
+
+         else {
+            if (p->getLeft() == nullptr && p->getRight() == nullptr) {
+               found = true;
+            }
+            else if (p->getLeft() != nullptr) {
+               TreeNodeRN<Chave, Valor> * aux = max(p->getLeft());
+               p->setKey(aux->getKey());
+               p->setValue(aux->getValue());
+               key = aux->getKey();
+               p = p->getLeft();
+            }
+            else {
+               TreeNodeRN<Chave, Valor> * aux = min(p->getRight());
+               p->setKey(aux->getKey());
+               p->setValue(aux->getValue());
+               key = aux->getKey();
+               p = p->getRight();
+            }
+         }
+      }
+
+      if (found) {
+         if (p == root) {
+            delete p;
+            root = nullptr;
+         }
+         else if (p->getColor() == "red") {
+            // caso 1.0: folha vermelha
+            if (p->getFather()->getLeft() == p)
+               p->getFather()->setLeft(nullptr);
+            else
+               p->getFather()->setRight(nullptr);
+        
+            delete p;
+         }
+         else {
+            TreeNodeRN<Chave, Valor> * aux = p;
+
+            while (true) {
+               if (p->getColor() == "doubleBlack" && p->getFather() == nullptr) {
+                  // caso 2.0: duplo preto é a root
+                  p->setColor("black");
+                  break;
+               }
+               else {
+                  TreeNodeRN<Chave, Valor> * father = p->getFather();
+                  TreeNodeRN<Chave, Valor> * brother = (father->getKey() > p->getKey()) ? father->getRight() : father->getLeft();
+            
+                  if (brother != nullptr && brother->getColor() == "red") {
+                     // caso 2.2: irmão vermelho
+                     string auxColor = brother->getColor();
+                     brother->setColor(father->getColor());
+                     father->setColor(auxColor);
+
+                     p->setColor("doubleBlack");
+
+                     if (father->getLeft() == p) {
+                        // rotaciona pra esquerda
+                        // NÃO ESQUECER DE ATUALIZAR OS PAIS
+                        brother->setFather(father->getFather()); // avo
+
+                        if (father->getFather() != nullptr) {
+                           if (father->getFather()->getLeft() == father)
+                              father->getFather()->setLeft(brother);
+                           else
+                              father->getFather()->setRight(brother);
+                        }
+                        else {
+                           root = brother;
+                        }
+
+                        father->setRight(brother->getLeft());
+
+                        if (brother->getLeft() != nullptr)
+                           brother->getLeft()->setFather(father);
+
+                        brother->setLeft(father);
+                        father->setFather(brother);
+                     }
+                     else {
+                        // rotaciona pra direita
+                        brother->setFather(father->getFather());
+
+                        if (father->getFather() != nullptr) {
+                           if (father->getFather()->getLeft() == father)
+                              father->getFather()->setLeft(brother);
+                           else
+                              father->getFather()->setRight(brother);
+                        }
+                        else {
+                           // quer dizer que o irmão vai ser a nova root;
+                           root = brother;
+                        }
+
+                        father->setLeft(brother->getRight());
+   
+                        if (brother->getRight() != nullptr)
+                           brother->getRight()->setFather(father);
+
+                        brother->setRight(father);
+                        father->setFather(brother);
+                     }
+                  }
+                  else if (brother != nullptr && brother->getColor() == "black") {
+                     if ((brother->getLeft() == nullptr || brother->getLeft()->getColor() == "black") && 
+                        (brother->getRight() == nullptr || brother->getRight()->getColor() == "black")) {
+                           // caso 2.1: irmão preto com filhos pretos
+                           brother->setColor("red");
+
+                           if (p == aux) {
+                              if (father->getLeft() == p)
+                                 father->setLeft(nullptr);
+                              else
+                                 father->setRight(nullptr);
+                  
+                              delete p;
+                           }
+
+                           if (father->getColor() == "red") {
+                              father->setColor("black");
+                              break;
+                           }
+                           else {
+                              father->setColor("doubleBlack");
+                              p = father; // empurrei o problema pra cima
+                           }
+                     }
+                     else {
+                        TreeNodeRN<Chave, Valor> * closerNephew = (father->getLeft() == p) ? brother->getLeft() : brother->getRight();
+                        TreeNodeRN<Chave, Valor> * farNephew = (father->getLeft() == p) ? brother->getRight() : brother->getLeft();
+
+                        if (farNephew != nullptr && farNephew->getColor() == "red") {   
+                           /* 
+                           caso 2.4: troca a cor do father com o irmão,
+                           rotaciona a subarvore com o father do duplo preto na direção do duplo preto
+                           e pinta o antigo sobrinho que era vermelho de preto
+                           */
+                           string auxColor = brother->getColor();
+                           brother->setColor(father->getColor());
+                           father->setColor(auxColor);
+
+                           if (father->getLeft() == p) {
+                              // rotaciona pra esquerda
+                              brother->setFather(father->getFather());
+
+                              if (father->getFather() != nullptr) {
+                                 if (father->getFather()->getLeft() == father)
+                                    father->getFather()->setLeft(brother);
+                                 else
+                                    father->getFather()->setRight(brother);
+                              }
+                              else {
+                                 // quer dizer que o irmão vai ser a nova root;
+                                 root = brother;
+                              }
+
+                              father->setRight(brother->getLeft());
+                     
+                              if (brother->getLeft() != nullptr)
+                                 brother->getLeft()->setFather(father);
+
+                              brother->setLeft(father);
+                              father->setFather(brother);
+                           }
+                           else {
+                              // rotaciona pra direita
+                              brother->setFather(father->getFather());
+
+                              if (father->getFather() != nullptr) {
+                                 if (father->getFather()->getLeft() == father)
+                                    father->getFather()->setLeft(brother);
+                                 else
+                                    father->getFather()->setRight(brother);
+                              }
+                              else {
+                                 // quer dizer que o irmão vai ser a nova root;
+                                 root = brother;
+                              }
+
+                              father->setLeft(brother->getRight());
+
+                              if (brother->getRight() != nullptr)
+                                 brother->getRight()->setFather(father);
+
+                              brother->setRight(father);
+                              father->setFather(brother);
+                           }
+   
+                           farNephew->setColor("black");
+
+                           if (p == aux) {
+                              if (father->getLeft() == p)
+                                 father->setLeft(nullptr);
+                              else
+                                 father->setRight(nullptr);
+                    
+                              delete p;
+                           }
+
+                           else
+                              p->setColor("black");
+
+                           break;
+                        }
+
+                        if (closerNephew != nullptr && closerNephew->getColor() == "red") {
+                           /* 
+                           caso 2.3: troca a cor do irmão e desse filho e
+                           rotaciona a subarvore do irmão na direção contrária do duplo preto 
+                           (se ele tá na direita, rotaciona pra esquerda. Se ele tá na esquerda, rotaciona pra direita)
+                           */
+                           string auxColor = brother->getColor();
+                           brother->setColor(closerNephew->getColor());
+                           closerNephew->setColor(auxColor);
+
+                           if (father->getLeft() == p) {
+                              // rotaciona pra direita (contrário da onde o p tá)
+                              closerNephew->setFather(brother->getFather());
+                              brother->getFather()->setRight(closerNephew);
+
+                              brother->setLeft(closerNephew->getRight());
+
+                              if (closerNephew->getRight() != nullptr)
+                                 closerNephew->getRight()->setFather(brother);
+   
+                              closerNephew->setRight(brother);
+                              brother->setFather(closerNephew);
+                           }
+                           else {
+                              // rotaciona pra esq (contrário da onde o p tá)
+                              closerNephew->setFather(father);
+                              father->setLeft(closerNephew);
+
+                              brother->setRight(closerNephew->getLeft());
+   
+                              if (closerNephew->getLeft() != nullptr)
+                                 closerNephew->getLeft()->setFather(brother);
+
+                              closerNephew->setLeft(brother);
+                              brother->setFather(closerNephew);
+                           }
+                        }
+                     }
+                  }
+               }
+            }
+         }
+      }
+
+      return root;
+  }
+}
+
+TreeNodeRN<Chave, Valor> * arvoreRN::max(TreeNodeRN<Chave, Valor> * root) {
+  if (root == nullptr || root->getRight() == nullptr)
+    return root;
+
+  return max(root->getRight());
+}
+
+TreeNodeRN<Chave, Valor> * arvoreRN::min(TreeNodeRN<Chave, Valor> * root) {
+   if (root == nullptr || root->getLeft() == nullptr)
+      return root;
+
+  return min(root->getLeft());
+}
+
 
 int arvoreRN::rank(Chave key) {
    return getRank(root, key);
@@ -248,7 +532,7 @@ void arvoreRN::printTable(TreeNodeRN<Chave, Valor> * root) {
       return;
       
    printTable(root->getLeft());
-   cout << root->getKey() << "   " << root->getValue() << endl;
+   cout << root->getKey() << endl;
    printTable(root->getRight());
 
 }

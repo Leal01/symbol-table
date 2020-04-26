@@ -104,7 +104,7 @@ Chave vetorOrd::seleciona(int k) {
 
 void vetorOrd::printTable() {
    for (int i = 0; i < n; i++)
-      cout << table[i]->getKey() << "     " << table[i]->getValue() << "\n"; 
+      cout << table[i]->getKey() << endl; 
 }
 
 void vetorOrd::resize() {

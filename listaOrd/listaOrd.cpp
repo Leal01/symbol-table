@@ -139,7 +139,7 @@ void listaOrd::printTable() {
    No aux = first;
 
    while (aux != nullptr) {
-      cout << aux->getKey() << "     " << aux->getValue() << endl; 
+      cout << aux->getKey() << endl; 
       aux = aux->getNext();
    }
 }

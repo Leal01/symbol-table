@@ -4,8 +4,8 @@ hashTable::hashTable(string file_name) {
    fstream textFile;
    Chave word;
 
-   table = new Node<Chave, Valor>*[9106];
-   for (int i = 0; i < 9106; i++)
+   table = new Node<Chave, Valor>*[8191];
+   for (int i = 0; i < 8191; i++)
       table[i] = nullptr;
 
    textFile.open(file_name);
@@ -18,26 +18,30 @@ hashTable::hashTable(string file_name) {
 }
 
 hashTable::~hashTable() {
-   for (int i = 0; i < 9106; i++)
-      delete table[i];
+   for (int i = 0; i < 8191; i++) {
+      No aux = table[i];
 
-   delete [] table;
+      while (aux != nullptr) {
+         No aux2 = aux;
+         aux = aux->getNext();
+         delete aux2;
+      }
+   }
 }
 
 void hashTable::insere(Chave key, Valor value) {
    int h = hash(key);
-   Node<Chave, Valor> * aux, * aux2;
-   aux = table[h];
+   No aux = table[h];
 
-   while (aux != nullptr &&  aux->getKey() != key)
-      aux = aux->getNext(); 
+   while (aux != nullptr && aux->getKey() != key)
+      aux = aux->getNext();
 
    if (aux == nullptr) {
-      aux = new Node<Chave, Valor>;
-      aux->setKey(key);
-      aux->setValue(value);
-      aux->setNext(table[h]);
-      table[h] = aux;
+      No newNode = new Node<Chave, Valor>;
+      newNode->setKey(key);
+      newNode->setValue(value);
+      newNode->setNext(table[h]);
+      table[h] = newNode;
    }
 
    else {
@@ -46,11 +50,11 @@ void hashTable::insere(Chave key, Valor value) {
 }
 
 int hashTable::hash(Chave key) {
-   int len = key.length();
+   int keyLength = key.length();
    int hashValue = 0;
 
-   for (int i = 0; i < len; i++) 
-      hashValue = (hashValue*23+key[i]) % 9106;
+   for (int i = 0; i < keyLength; i++) 
+      hashValue = (hashValue * 23 + key[i]) % 8191;
    
 
    return hashValue;
@@ -58,57 +62,77 @@ int hashTable::hash(Chave key) {
 
 Valor hashTable::devolve(Chave key) {
    int h = hash(key);
+   No aux = table[h];
 
-   while (table[h] != nullptr && table[h]->getKey() != key) 
-      table[h] = table[h]->getNext();
-   
+   while (aux != nullptr) {
+      if (aux->getKey() == key)
+         return aux->getValue();
 
-   if (table[h] != nullptr)
-      return table[h]->getValue();
-
-   else {
-      cout << "Chave não encontrada\n";
-      return -1;
+      aux = aux->getNext();
    }
-      
 
+   cout << "Chave não encontrada\n";
+   return -1;
 }
 
 void hashTable::remove(Chave key) {
    int h = hash(key);
+   No aux = table[h];
+   No aux2 = nullptr;
 
-   while (table[h] != nullptr) {
-      Node<Chave, Valor> * aux = table[h];
-      if (table[h]->getKey() == key) {
-         table[h] = table[h]->getNext();
-         return;
+   while (aux != nullptr) {
+      if (aux->getKey() == key) {
+         if (aux2 == nullptr)
+            table[h] = aux->getNext();
+         else
+            aux2->setNext(aux->getNext());
+         delete aux;
+         break;
       }
-      table[h] = table[h]->getNext();
-   
+      aux2 = aux;
+      aux = aux->getNext();
    }
 
    printTable();
 }
 
 int hashTable::rank(Chave key) {
-   int h = hash(key);
+   int rank = 0;
 
-   return h;
+   for (int i = 0; i < 8191; i++) {
+      No aux = table[i];
+      
+      while (aux != nullptr && aux->getKey() != key) {
+         if (aux->getKey() < key)
+            rank++;
+         aux = aux->getNext();
+      }
+   }
+
+   return rank;
 }
 
 Chave hashTable::seleciona(int k) {
+   for (int i = 0; i < 8191; i++) {
+      No aux = table[i];
+      while (aux != nullptr) {
+         if (rank(aux->getKey()) == k)
+            return aux->getKey();
+         aux = aux->getNext();
+      }
+   }
+   cout << "Rank indisponível\n";   
 
 }
 
 void hashTable::printTable() {
    Node<Chave, Valor> ** aux = table;
-   for (int i = 0; i < 9106; i++) {
+   for (int i = 0; i < 8191; i++) {
       if (aux[i] != nullptr) {
-         cout << aux[i]->getKey() << "     " << aux[i]->getValue() << "\n";
+         cout << aux[i]->getKey() << endl;
          Node<Chave, Valor> * aux2 = aux[i]->getNext();
          while (aux2 != nullptr) {
-            cout << "COLISÃO:   ";
-            cout << aux2->getKey() << "     " << aux2->getValue() << "\n";
+            cout << aux2->getKey() << endl;
             aux2 = aux2->getNext();
          }
       }

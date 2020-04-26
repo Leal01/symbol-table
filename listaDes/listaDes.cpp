@@ -93,14 +93,12 @@ int listaDes::rank(Chave key) {
    int r = 0;
 
    while (aux != nullptr) {
-      if (aux->getKey() == key)
-         return r;
+      if (aux->getKey() < key)
+         r++;
 
-      r++;
       aux = aux->getNext();
    }
-
-   cout << "Chave não encontrada!\n";
+  return r; 
 }
 
 Chave listaDes::seleciona(int k) { 
@@ -114,7 +112,7 @@ void listaDes::printTable() {
    No aux = first;
 
    while (aux != nullptr) {
-      cout << aux->getKey() << "     " << aux->getValue() << endl; 
+      cout << aux->getKey() << endl; 
       aux = aux->getNext();
    }
 }

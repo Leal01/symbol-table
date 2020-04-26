@@ -105,6 +105,9 @@ class arvoreRN {
       TreeNodeRN<Chave, Valor> * root;
       TreeNodeRN<Chave, Valor> * put(TreeNodeRN<Chave, Valor> * root, Chave key, Valor value);
       Valor get(TreeNodeRN<Chave, Valor> * root, Chave key);
+      TreeNodeRN<Chave, Valor> * destroy(TreeNodeRN<Chave, Valor> * root, Chave key);
+      TreeNodeRN<Chave, Valor> * max(TreeNodeRN<Chave, Valor> * root);
+      TreeNodeRN<Chave, Valor> * min(TreeNodeRN<Chave, Valor> * root);
       void deleteTree(TreeNodeRN<Chave, Valor> * root);
       int getRank(TreeNodeRN<Chave, Valor> * root, Chave key);
       int size(TreeNodeRN<Chave, Valor> * root);

@@ -73,30 +73,27 @@ void vetorDes::remove(Chave key) {
 }
 
 int vetorDes::rank(Chave key) {
-   int i, m;
-   i = m = 0;
+   int rank = 0;
 
-   for (; table[i]->getKey() != key && i < n; i++) 
-      m++;
+   for (int i = 0; i < n; i++) {
+      if (table[i]->getKey() < key)
+         rank++;
+   }
 
-   if (table[i]->getKey() == key)
-      return m;
-   else
-      cout << "Chave não encontrada\n";
-
-   return -1;
+   return rank;
 }
 
 Chave vetorDes::seleciona(int k) {
-   if (k < n)
-      return table[k]->getKey();
-   else
-      cout << "Rank indisponível\n";
+   for (int i = 0; i < n; i++) {
+      if (rank(table[i]->getKey()) == k)
+         return table[i]->getKey();
+   }
+
 }
 
 void vetorDes::printTable() {
    for (int i = 0; i < n; i++)
-      cout << table[i]->getKey() << "     "<< table[i]->getValue() << "\n"; 
+      cout << table[i]->getKey() << endl; 
 }
 
 void vetorDes::resize() {

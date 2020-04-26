@@ -12,8 +12,8 @@ RN		 = arvoreRN
 HS		 = hashTable
 RM		 = rm
 #-----------------------
-ep1: main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o $(HS).o
-	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o  $(HS).o -lm
+ep1: main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o $(HS).o $(TR).o
+	$(CC) -o ep1 main.o $(VD).o $(VO).o $(LD).o $(LO).o $(AB).o $(RN).o $(A23).o  $(HS).o $(TR).o -lm
 
 main.o: main.cpp  util.hpp
 	$(CC) $(CFLAGS) -c main.cpp
@@ -33,8 +33,8 @@ listaOrd.o: $(LO)/$(LO).cpp $(LO)/$(LO).hpp node.hpp
 arvoreBin.o: $(AB)/$(AB).cpp $(AB)/$(AB).hpp 
 	$(CC) $(CFLAGS) -c $(AB)/$(AB).cpp
 
-# treap.o: $(TR)/$(TR).cpp $(TR)/$(TR).hpp util.hpp node.hpp
-# 	$(CC) $(CFLAGS) -c $(TR)/$(TR).cpp
+treap.o: $(TR)/$(TR).cpp $(TR)/$(TR).hpp util.hpp node.hpp
+	$(CC) $(CFLAGS) -c $(TR)/$(TR).cpp
 
 arvore23.o: $(A23)/$(A23).cpp $(A23)/$(A23).hpp 
 	$(CC) $(CFLAGS) -c $(A23)/$(A23).cpp
@@ -47,6 +47,3 @@ hashTable.o: $(HS)/$(HS).cpp $(HS)/$(HS).hpp util.hpp node.hpp
 
 clear:
 	$(RM) -r *.o && $(RM) -r ep1
-
-# $(VO).o $(LD).o $(LO).o $(AB).o $(TR).o $(A23).o $(RN).o $(HS).o
-# $(VO).o $(LD).o $(LO).o $(AB).o $(TR).o $(A23).o $(RN).o $(HS).o

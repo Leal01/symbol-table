@@ -8,6 +8,7 @@ class TreeNode23 {
       TreeNode23<Key, Value> * left;
       TreeNode23<Key, Value> * right;
       TreeNode23<Key, Value> * mid;
+      TreeNode23<Key, Value> * father;
       bool twoNode;
    public:
       TreeNode23();
@@ -17,12 +18,14 @@ class TreeNode23 {
       void setMid(TreeNode23<Key, Value> * newMid);
       void setLeft(TreeNode23<Key, Value> * newLeft);
       void setRight(TreeNode23<Key, Value> * newRight);
+      void setFather(TreeNode23<Key, Value> * newFather);
       void setTwoNode(bool option);
       Key getKey(int which);
       Value getValue(int which);
       TreeNode23<Key, Value> * getMid();
       TreeNode23<Key, Value> * getLeft();
       TreeNode23<Key, Value> * getRight();
+      TreeNode23<Key, Value> * getFather();
       bool isLeaf();
       bool getTwoNode();
 
@@ -92,6 +95,11 @@ void TreeNode23<Key, Value>::setRight(TreeNode23<Key, Value> * newRight) {
 }
 
 template <class Key, class Value>
+void TreeNode23<Key, Value>::setFather(TreeNode23<Key, Value> * newFather) {
+   father = newFather;
+}
+
+template <class Key, class Value>
 TreeNode23<Key, Value> * TreeNode23<Key, Value>::getLeft() {
    return left;
 }
@@ -100,6 +108,12 @@ template <class Key, class Value>
 TreeNode23<Key, Value> * TreeNode23<Key, Value>::getRight() {
    return right;
 }
+
+template <class Key, class Value>
+TreeNode23<Key, Value> * TreeNode23<Key, Value>::getFather() {
+   return father;
+}
+
 
 template <class Key, class Value>
 void TreeNode23<Key, Value>::setTwoNode(bool option) {
@@ -121,6 +135,8 @@ class arvore23 {
       TreeNode23<Chave, Valor> * root;
       TreeNode23<Chave, Valor> * put(TreeNode23<Chave, Valor> * root, Chave key, Valor value, bool &grew);
       Valor get(TreeNode23<Chave, Valor> * root, Chave key);
+      TreeNode23<Chave, Valor> * max(TreeNode23<Chave, Valor> * root);
+      TreeNode23<Chave, Valor> * destroy(TreeNode23<Chave, Valor> * root, Chave key, bool &decreased);
       Chave select(TreeNode23<Chave, Valor> * root, int k);
       int size(TreeNode23<Chave, Valor> * root);
       int getRank(TreeNode23<Chave, Valor> * root, Chave key);
